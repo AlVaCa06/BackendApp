@@ -11,11 +11,22 @@ CORS(app)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 
+
 @app.route('/cargacontactos')
-def get_usersa():
-    catalogo =""
+def carga_contactos():
     return contactos.cargaContactos()
 
+@app.route('/guardacontacto', methods=['post'])
+def add_contacto():
+    contacto = request.get_json()
+    return contactos.guardaContacto(contacto)
+
+@app.route('/getcontacto', methods=['post'])
+def get_contacto():
+    contacto = request.get_json()
+    return contactos.cargaContacto(contacto)
 
 if __name__ == '__main__':
     app.run( host='192.168.1.91', port=8080, debug=True)
+
+
